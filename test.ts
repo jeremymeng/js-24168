@@ -58,3 +58,15 @@ export class QueueService {
     );
   }
 }
+
+async function main() {
+  const service = new QueueService();
+  const now = new Date();
+  const msgId = await service.sendMessage(
+    { body: "hello at" + now.toUTCString() },
+    new Date(now.getTime() + 60 * 10 * 1000)
+  );
+  await service.cancelMessage(msgId);
+}
+
+main().catch(console.error);
